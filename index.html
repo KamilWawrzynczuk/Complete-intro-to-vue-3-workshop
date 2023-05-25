@@ -4,7 +4,77 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Avatar</title>
   </head>
-  <body></body>
+  <body>
+    <div id="app">
+      <p v-if="characterList.length === 0">There are no characters.</p>
+      <ul v-else>
+        <li v-for="character in characterList">
+          {{character.name}}
+          <button @:click="addToFav(character.name, $event)">Add to fav</button>
+        </li>
+      </ul>
+
+      <p>Favourite List:</p>
+      <ul>
+        <li v-for="character in favouriteList">{{character}}</li>
+      </ul>
+
+      <form @:submit="addCharacter">
+        <label for="addNewCharacter">Add new Character</label>
+        <input id="addNewCharacter" />
+        <button type="submit">add character</button>
+      </form>
+
+      <pre>{{newCharacter}}</pre>
+      <label for="addNewCharacter2">Add new Character2</label>
+      <input type="text" id="addNewCharacter2" v-model="newCharacter.name" />
+      <button @:click="addCharacter2">add character 2</button>
+
+      <p>
+        <span v-for="(character, index) in characterList">
+          {{character.name}}{{ index === characterList.length - 1 ? ' ': ', '}}
+        </span>
+      </p>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <script>
+      const { createApp } = Vue;
+
+      const app = createApp({
+        data() {
+          return {
+            newCharacter: {
+              name: ''
+            },
+            favouriteList: [],
+            characterList: [
+              { name: "Aang" },
+              { name: "Kamil" },
+              { name: "Paweł" },
+              { name: "Sofia" },
+            ],
+          };
+        },
+        methods: {
+          addToFav(characterName, event) {
+            this.favouriteList.push(characterName);
+          },
+          addCharacter2(){
+            this.characterList.push(this.newCharacter);
+          },
+          addCharacter(event) {
+            event.preventDefault();
+
+            this.characterList.push({ name: arguments[0].target[0].value });
+          },
+        },
+      });
+
+      app.mount("#app");
+    </script>
+  </body>
 </html>

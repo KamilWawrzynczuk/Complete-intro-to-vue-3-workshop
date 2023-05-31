@@ -1,27 +1,32 @@
-<script>
+<script setup>
 // https://pokeapi.co/api/v2/pokemon?limit=151
+import BaseCounter from "./components/base-counter.vue";
+import UserCard from "./components/user-card.vue";
+import { ref } from "vue";
 
-export default {
-  data: () => ({
-    pokedex: [1, 2, 3],
-  }),
-  methods: {
-    async fetchPokemon() {
-      this.pokedex = await fetch(
-        "https://pokeapi.co/api/v2/pokemon?limit=151"
-      ).then((response) => response.json());
-    },
-  },
-  created() {
-    this.fetchPokemon();
-  },
-};
+const colorPreference = ref("black");
 </script>
 
 <template>
-  <h1>New App</h1>
-  <pre>{{ pokedex }}</pre>
-  <button @click="fetchPokemon">Fetch Pokemon</button>
+  <div class="wrapper">
+    <h2>{{ colorPreference }}</h2>
+    <input type="color" v-model="colorPreference" />
+    <BaseCounter />
+    <UserCard :user="{ name: 'kamil', food: 'Pizza' }" />
+  </div>
 </template>
 
-<style></style>
+<style>
+html {
+  background-color: papayawhip;
+}
+
+.wrapper {
+  background-color: v-bind(colorPreference);
+}
+
+.button {
+  border: 10px solid red;
+  font-size: 25px;
+}
+</style>

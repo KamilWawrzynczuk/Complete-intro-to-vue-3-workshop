@@ -43,11 +43,10 @@ export default {
     </nav>
   </header>
   <Suspense>
-     <component :is="renderPage" :key="renderPage" />
+    <component :is="renderPage" :key="renderPage" name="Milson Wielki" />
 
-     <template #fallback>Page is loading...</template>
+    <template #fallback>Page is loading...</template>
   </Suspense>
- 
 </template>
 
 <style>

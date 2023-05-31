@@ -10,7 +10,7 @@ export default {
 </script>
 
 <template>
-  <li class="user-card">{{ user.name }}: {{ user.website }}</li>
+  <li class="user-card">{{ user.name }} : {{ user.website }}</li>
 </template>
 
 <style>

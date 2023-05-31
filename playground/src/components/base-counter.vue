@@ -1,5 +1,15 @@
 <script>
+import { useCount } from "../composables/countStore.js";
+
 export default {
+  setup() {
+    const countStore = useCount();
+    console.log(countStore);
+
+    return {
+      countStore,
+    };
+  },
   data: () => ({
     count: 10,
     counterTitle: "Counter Standard",
@@ -22,6 +32,7 @@ export default {
       console.log(newAmount);
       console.log(event);
       this.count += this.optimizedIncrementAmount;
+      // this.newCount += 10;
     },
   },
 };
@@ -29,8 +40,16 @@ export default {
 
 <template>
   <h1>{{ displayTitle }}</h1>
+  <h2>New Counter:</h2>
+  <p>Global Count: {{ countStore.globalCount }}</p>
+  <p>Local Count: {{ countStore.localCount }}</p>
+  <button class="button" @click="countStore.incrementGlobalCount">
+    Global
+  </button>
+  <button class="button" @click="countStore.increentLocalCount">Local</button>
+  <hr />
   <p :data-increment-by="incrementAmount">{{ count }}</p>
-  <button @click="incrementCount">Increment Count</button>
+  <button class="button" @click="incrementCount">Increment Count</button>
   <h1>{{ incrementAmount }}</h1>
   <p>{{ optimizedIncrementAmount }}</p>
   <div>
